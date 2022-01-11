@@ -19,8 +19,8 @@ class MLP:
         np.random.seed(0)
         input_node = self.input_node; hidden_node = self.hidden_node
         output_node = self.output_node; alpha = alpha; max_iter=max_iter
-        for iter in range(1, max_iter):
-            for i in range(n_train):
+        for iter in range(1, max_iter): # max_iter 만큼 학습
+            for i in range(n_train): # z1, z2는 dot product
                 z1 = np.dot(self.w1, train_x[i].reshape(1,1)) + self.b1; a1 = self.sigmoid(z1)
                 z2 = np.dot(self.w2, a1) + self.b2; y_hat = z2; y_hat_list[i] = y_hat
                 e = 0.5*(train_y[i]-y_hat)**2; dy = -(train_y[i] - y_hat)
@@ -51,7 +51,7 @@ test_y = np.sin(test_x)
 y_hat_list = np.zeros(n_test)
 
 mlp = MLP(hidden_node=4)
-mlp.train(train_x, train_y, max_iter=600)
+mlp.train(train_x, train_y, max_iter=700)
 plt.plot(test_x, test_y, label = 'ground truth')
 
 y_hat_list = mlp.predict(test_x)
