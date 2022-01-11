@@ -22,7 +22,7 @@ Dy = dy(X1, Y1)  # dy 값 구함
 
 plt.figure(figsize=(10,5))  # plt 객치 크기
 plt.contour(X, Y, Z, levels = np.logspace(0, 3, 10)) # 등고선 표현하기 (logspace 사용해서 하한 0, 상한 3 사이의 10개의 로그)
-plt.quiver(X1, Y1, Dx, Dy, color='red', scale = 1000, minshaft = 4) # 화살표 그리기 (x1,y1은 벡터 위치, u,v는 벡터 성분)
+plt.quiver(X1, Y1, -Dx, -Dy, color='red', scale = 500, minshaft = 4) # 화살표 그리기 (x1,y1은 벡터 위치, u,v는 벡터 성분)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()
