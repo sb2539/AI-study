@@ -21,15 +21,27 @@ class MLP:
         output_node = self.output_node; alpha = alpha; max_iter=max_iter
         for iter in range(1, max_iter): # max_iter 만큼 학습
             for i in range(n_train): # z1, z2는 dot product
-                z1 = np.dot(self.w1, train_x[i].reshape(1,1)) + self.b1; a1 = self.sigmoid(z1)
-                z2 = np.dot(self.w2, a1) + self.b2; y_hat = z2; y_hat_list[i] = y_hat
-                e = 0.5*(train_y[i]-y_hat)**2; dy = -(train_y[i] - y_hat)
-                dz2 = 1; dw2 = a1.T
-                delta_w2 = dy*dz2*dw2; delta_b2 = dy*dz2
-                da1 = self.w2.T; dz1 = self.d_sigmoid(z1); dw1 = train_x[i].T
-                delta_w1 = dy*dz2*da1*dz1*dw1; delta_b1 = dy*dz2*da1*dz1
-                self.w2 -= alpha*delta_w2; self.b2 -= alpha*delta_b2
-                self.w1 -= alpha*delta_w1; self.b1 -= alpha*delta_b1
+                z1 = np.dot(self.w1, train_x[i].reshape(1,1)) + self.b1 # 은닉층 계산
+                a1 = self.sigmoid(z1)
+                z2 = np.dot(self.w2, a1) + self.b2 # 출력층 계산
+                y_hat = z2  # 예측값
+                y_hat_list[i] = y_hat # 예측값 리스트 
+                e = 0.5*(train_y[i]-y_hat)**2  # 오차 함수
+                dy = -(train_y[i] - y_hat)
+                dz2 = 1
+                dw2 = a1.T
+                delta_w2 = dy*dz2*dw2
+                delta_b2 = dy*dz2
+                da1 = self.w2.T
+                dz1 = self.d_sigmoid(z1)
+                dw1 = train_x[i].T
+                delta_w1 = dy*dz2*da1*dz1*dw1
+                delta_b1 = dy*dz2*da1*dz1
+                # 학습을 위해 값 변경 해가는 과정
+                self.w2 -= alpha*delta_w2
+                self.b2 -= alpha*delta_b2
+                self.w1 -= alpha*delta_w1
+                self.b1 -= alpha*delta_b1
 
     def predict(self, test_x):
         for i in range(n_test):
